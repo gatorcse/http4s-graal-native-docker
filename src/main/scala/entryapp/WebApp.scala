@@ -28,7 +28,7 @@ object WebApp extends IOApp {
     val app = Router("/" -> service).orNotFound
 
     val server = BlazeServerBuilder[IO]
-      .bindHttp(8080, "localhost")
+      .bindHttp(8080)
       .withHttpApp(app)
       .resource.use(_ => IO.never)
 
