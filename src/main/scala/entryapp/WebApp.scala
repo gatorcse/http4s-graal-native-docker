@@ -34,6 +34,6 @@ object WebApp extends IOApp {
       .withHttpApp(app)
       .resource.use(_ => IO.never)
 
-    Logger[IO].info("Starting app.") *> server.as(ExitCode.Success)
+    Logger[IO].info(s"Starting app: $hostname") *> server.as(ExitCode.Success)
   }
 }
