@@ -10,7 +10,6 @@ import org.http4s.server.blaze._
 import org.http4s.implicits._
 import org.http4s.server.Router
 import org.log4s.getLogger
-import scala.collection.JavaConverters._
 
 object WebApp extends IOApp {
 
