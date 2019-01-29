@@ -2,7 +2,7 @@ steps:
 - name: 'gcr.io/gator-cloud/scala-sbt'
   args: ['sbt', 'assembly']
 - name: 'gcr.io/gator-cloud/graalvm-ce'
-  args: ['native-image', '-H:+ReportUnsupportedElementsAtRuntime', '--static', '--no-server', '-jar', 'target/scala-2.12/application.jar']
+  args: ['native-image', '-H:+ReportUnsupportedElementsAtRuntime', '--no-server', '-jar', 'target/scala-2.12/application.jar']
 - name: 'gcr.io/cloud-builders/docker'
   args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/entry:rev-$SHORT_SHA', '.' ]
 images:
