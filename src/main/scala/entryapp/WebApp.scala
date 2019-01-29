@@ -21,7 +21,7 @@ object WebApp extends IOApp {
     val service = HttpRoutes.of[IO] {
       case GET -> Root / "hello" / name => for {
         _ <- Logger[IO].info("Sending response from our app.")
-        res <- Ok(s"Hello, $name.")
+        res <- Ok(s"Hello, $name.\n")
       } yield res
     }
 
