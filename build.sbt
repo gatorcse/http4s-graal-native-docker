@@ -4,6 +4,8 @@ version := "0.1"
 
 scalaVersion := "2.12.8"
 
+assemblyJarName in assembly := "application.jar"
+
 val http4sVersion = "0.20.0-M5"
 val circeVersion = "0.10.0"
 
