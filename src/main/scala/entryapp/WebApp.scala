@@ -10,12 +10,13 @@ import org.http4s.server.blaze._
 import org.http4s.implicits._
 import org.http4s.server.Router
 import org.log4s.getLogger
+import scala.collection.JavaConverters._
 
 object WebApp extends IOApp {
 
   override def run(args: List[String]): IO[ExitCode] = {
 
-    val hostname = java.net.InetAddress.getLocalHost.getHostName
+    val hostname = System.getenv().asScala.getOrElse("HOSTNAME", "127.0.0.1")
 
     val log4sLogger = getLogger
     implicit val logger: SelfAwareLogger[IO] = Log4sLogger.fromLog4s[IO](log4sLogger)
@@ -34,6 +35,6 @@ object WebApp extends IOApp {
       .withHttpApp(app)
       .resource.use(_ => IO.never)
 
-    Logger[IO].info(s"Starting app: $hostname") *> server.as(ExitCode.Success)
+    Logger[IO].info(s"Starting app. $hostname") *> server.as(ExitCode.Success)
   }
 }
