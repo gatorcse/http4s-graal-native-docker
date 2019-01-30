@@ -15,8 +15,6 @@ object WebApp extends IOApp {
 
   override def run(args: List[String]): IO[ExitCode] = {
 
-    val hostname = Option(System.getenv("HOSTNAME")).getOrElse("localhost")
-
     val log4sLogger = getLogger
     implicit val logger: SelfAwareLogger[IO] = Log4sLogger.fromLog4s[IO](log4sLogger)
 
@@ -30,10 +28,10 @@ object WebApp extends IOApp {
     val app = Router("/" -> service).orNotFound
 
     val server = BlazeServerBuilder[IO]
-      .bindHttp(8080, hostname)
+      .bindHttp(8080)
       .withHttpApp(app)
       .resource.use(_ => IO.never)
 
-    Logger[IO].info(s"Starting app. $hostname") *> server.as(ExitCode.Success)
+    Logger[IO].info("Starting app.") *> server.as(ExitCode.Success)
   }
 }
