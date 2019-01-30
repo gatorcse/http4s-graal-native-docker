@@ -15,7 +15,7 @@ object WebApp extends IOApp {
 
   override def run(args: List[String]): IO[ExitCode] = {
 
-    val hostname = Option(System.getenv("HOSTNAME")).getOrElse("localhost")
+    val hostname = Option(System.getenv("HOSTNAME")).getOrElse("0.0.0.0")
 
     val log4sLogger = getLogger
     implicit val logger: SelfAwareLogger[IO] = Log4sLogger.fromLog4s[IO](log4sLogger)
