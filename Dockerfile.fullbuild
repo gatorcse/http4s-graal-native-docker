@@ -1,0 +1,26 @@
+# Compile a fat jar
+FROM gatorcse/scala-sbt:2.12.8 as scala-builder
+WORKDIR /building
+
+COPY src src
+COPY project project
+COPY build.sbt .
+
+RUN sbt -mem 4096 assembly
+
+# Build the native image
+FROM oracle/graalvm-ce:1.0.0-rc11 as graalvm-builder
+WORKDIR /building
+
+COPY --from=scala-builder /building/target/scala-2.12/application.jar .
+
+RUN native-image --enable-http --enable-https --no-server --static -jar application.jar
+RUN stat -c "Built application binary. Size: %s" application
+
+# Lightest container image containging glibc (required for graal compiled apps)
+FROM busybox:glibc
+
+COPY --from=graalvm-builder /building/application /
+
+EXPOSE 8080
+ENTRYPOINT ["/application"]
