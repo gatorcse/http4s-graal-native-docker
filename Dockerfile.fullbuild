@@ -18,7 +18,7 @@ RUN native-image --enable-http --enable-https --no-server --static -jar applicat
 RUN stat -c "Built application binary. Size: %s" application
 
 # Lightest container image containging glibc (required for graal compiled apps)
-FROM busybox:glibc
+FROM oraclelinux:7-slim
 
 COPY --from=graalvm-builder /building/application /
 

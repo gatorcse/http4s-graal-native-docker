@@ -15,3 +15,4 @@ To do this build, run
 ```
 docker build -f Dockerfile.fullbuild . -t myapp
 ```
+    
